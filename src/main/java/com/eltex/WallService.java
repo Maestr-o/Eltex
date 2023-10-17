@@ -1,22 +1,68 @@
 package com.eltex;
+
 public class WallService {
     private Post post = new Post.Builder().build();
-    public void like(){
-        final var likes = post.likes() + 1;
+
+    public void setId(final long id) {
         post = post.builder()
-                .setLikes(likes)
+                .setId(id)
                 .build();
     }
-    public void setContent(final String content){
+
+    public void setAuthorId(final long authorId) {
         post = post.builder()
-                .setContent(content)
+                .setAuthorId(authorId)
                 .build();
     }
-    public void setAuthor(final String author){
+
+    public void setAuthor(final String author) {
         post = post.builder()
                 .setAuthor(author)
                 .build();
     }
+
+    public void setAuthorJob(final String authorJob) {
+        post = post.builder()
+                .setAuthorJob(authorJob)
+                .build();
+    }
+
+    public void setAuthorAvatar(final String authorAvatar) {
+        post = post.builder()
+                .setAuthorAvatar(authorAvatar)
+                .build();
+    }
+
+    public void setContent(final String content) {
+        post = post.builder()
+                .setContent(content)
+                .build();
+    }
+
+    public void setPublished(final String published) {
+        post = post.builder()
+                .setPublished(published)
+                .build();
+    }
+
+    public void setLink(final String link) {
+        post = post.builder()
+                .setLink(link)
+                .build();
+    }
+
+    public void setMentionedMe(final boolean mentionedMe) {
+        post = post.builder()
+                .setMentionedMe(mentionedMe)
+                .build();
+    }
+
+    public void setLikedByMe(final boolean likedByMe) {
+        post = post.builder()
+                .setLikedByMe(likedByMe)
+                .build();
+    }
+
     public Post getPost(){
         return post;
     }
