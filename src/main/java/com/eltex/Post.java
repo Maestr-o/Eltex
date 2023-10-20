@@ -1,6 +1,13 @@
 package com.eltex;
-public record Post(long id, long authorId, String author, String authorJob, String authorAvatar, String content,
-                   String published, String link, boolean mentionedMe, boolean likedByMe) {
+import org.jetbrains.annotations.Nullable;
+
+public record Post(long id, long authorId, String author, @Nullable String authorJob, @Nullable String authorAvatar,
+                   String content, String published, @Nullable String link, boolean mentionedMe, boolean likedByMe,
+                   @Nullable Coordinates coords, @Nullable Attachment attachment, Post original) {
+    public boolean isOriginal() {
+        return original == null;
+    }
+
     Builder builder() {
         return new Builder()
                 .setId(id)
@@ -12,20 +19,26 @@ public record Post(long id, long authorId, String author, String authorJob, Stri
                 .setPublished(published)
                 .setLink(link)
                 .setMentionedMe(mentionedMe)
-                .setLikedByMe(likedByMe);
+                .setLikedByMe(likedByMe)
+                .setCoords(coords)
+                .setAttachment(attachment)
+                .setOriginal(original);
     }
     static class Builder {
         // Обязательно указываем начальные значения полей
         private long id = 0;
         private long authorId = 0;
         private String author = "";
-        private String authorJob = "";
-        private String authorAvatar = "";
+        @Nullable private String authorJob = null;
+        @Nullable private String authorAvatar = null;
         private String content = "";
         private String published = "01-01-1980 00:00:00";
-        private String link = "";
+        @Nullable private String link = null;
         private boolean mentionedMe = false;
         private boolean likedByMe = false;
+        @Nullable private Coordinates coords = null;
+        @Nullable private Attachment attachment = null;
+        @Nullable private Post original = null;
 
         // Каждый метод строителя запоминает данные и возвращает сам себя
         public Builder setId(long id) {
@@ -78,10 +91,25 @@ public record Post(long id, long authorId, String author, String authorJob, Stri
             return this;
         }
 
+        public Builder setCoords(Coordinates coords) {
+            this.coords = coords;
+            return this;
+        }
+
+        public Builder setAttachment(Attachment attachment) {
+            this.attachment = attachment;
+            return this;
+        }
+
+        public Builder setOriginal(Post original) {
+            this.original = original;
+            return this;
+        }
+
         // В финале вызываем build, чтобы получить результат
-        public Post build(){
+        public Post build() {
             return new Post(id, authorId, author, authorJob, authorAvatar, content, published, link, mentionedMe,
-                    likedByMe);
+                    likedByMe, coords, attachment, original);
         }
     }
 }

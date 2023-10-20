@@ -63,6 +63,24 @@ public class WallService {
                 .build();
     }
 
+    public void setCoors(final Coordinates coords) {
+        post = post.builder()
+                .setCoords(coords)
+                .build();
+    }
+
+    public void setAttachment(final Attachment attachment) {
+        post = post.builder()
+                .setAttachment(attachment)
+                .build();
+    }
+
+    public void setOriginal(final Post original) {
+        post = post.builder()
+                .setOriginal(original)
+                .build();
+    }
+
     public Post getPost(){
         return post;
     }
