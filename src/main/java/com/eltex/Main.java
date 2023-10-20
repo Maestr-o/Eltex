@@ -1,5 +1,5 @@
 package com.eltex;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 public class Main {
     public static void main(String[] args) {

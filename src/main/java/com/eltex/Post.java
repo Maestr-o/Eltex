@@ -1,5 +1,5 @@
 package com.eltex;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 
 public record Post(long id, long authorId, String author, @Nullable String authorJob, @Nullable String authorAvatar,
                    String content, String published, @Nullable String link, boolean mentionedMe, boolean likedByMe,

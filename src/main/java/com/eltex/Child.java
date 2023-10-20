@@ -1,4 +1,5 @@
 package com.eltex;
+
 public class Child extends Parent {
     private String childProperty;
     public Child() {

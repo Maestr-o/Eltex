@@ -1,4 +1,5 @@
 package com.eltex;
+
 public class Parent {
     private final String parentProperty;
     public Parent(final String parentProperty) {
