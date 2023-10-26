@@ -1,9 +1,28 @@
 package com.eltex;
-import org.jetbrains.annotations.*;
 
-public record Post(long id, long authorId, String author, @Nullable String authorJob, @Nullable String authorAvatar,
-                   String content, String published, @Nullable String link, boolean mentionedMe, boolean likedByMe,
-                   @Nullable Coordinates coords, @Nullable Attachment attachment, Post original) {
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+public record Post(
+        @NotNull long id,
+        @NotNull long authorId,
+        @NotNull String author,
+        @Nullable String authorJob,
+        @Nullable String authorAvatar,
+        @NotNull String content,
+        @NotNull String published,
+        @Nullable String link,
+        @NotNull boolean mentionedMe,
+        @NotNull boolean likedByMe,
+        @Nullable Coordinates coords,
+        @Nullable Attachment attachment,
+        @NotNull List<Long> likeOwnerIds,
+        @NotNull Map<Long, UserPreview> users,
+        @NotNull List<Long> mentionIds,
+        Post original) {
     public boolean isOriginal() {
         return original == null;
     }
@@ -22,82 +41,103 @@ public record Post(long id, long authorId, String author, @Nullable String autho
                 .setLikedByMe(likedByMe)
                 .setCoords(coords)
                 .setAttachment(attachment)
+                .setLikeOwnerIds(likeOwnerIds)
+                .setUsers(users)
+                .setMentionIds(mentionIds)
                 .setOriginal(original);
     }
     static class Builder {
         // Обязательно указываем начальные значения полей
-        private long id = 0;
-        private long authorId = 0;
-        private String author = "";
+        @NotNull private long id = 0;
+        @NotNull private long authorId = 0;
+        @NotNull private String author = "";
         @Nullable private String authorJob = null;
         @Nullable private String authorAvatar = null;
-        private String content = "";
-        private String published = "01-01-1980 00:00:00";
+        @NotNull private String content = "";
+        @NotNull private String published = "01-01-1980 00:00:00";
         @Nullable private String link = null;
-        private boolean mentionedMe = false;
-        private boolean likedByMe = false;
+        @NotNull private boolean mentionedMe = false;
+        @NotNull private boolean likedByMe = false;
         @Nullable private Coordinates coords = null;
         @Nullable private Attachment attachment = null;
+        @NotNull private List<Long> likeOwnerIds = Collections.emptyList();
+        @NotNull private Map<Long, UserPreview> users = Collections.emptyMap();
+        @NotNull private List<Long> mentionIds = Collections.emptyList();
         @Nullable private Post original = null;
 
         // Каждый метод строителя запоминает данные и возвращает сам себя
-        public Builder setId(long id) {
+        public Builder setId(@NotNull long id) {
             this.id = id;
             return this;
         }
 
-        public Builder setAuthorId(long authorId) {
+        public Builder setAuthorId(@NotNull long authorId) {
             this.authorId = authorId;
             return this;
         }
 
-        public Builder setAuthor(final String author){
+        public Builder setAuthor(@NotNull final String author){
             this.author = author;
             return this;
         }
 
-        public Builder setAuthorJob(String authorJob) {
+        public Builder setAuthorJob(@Nullable String authorJob) {
             this.authorJob = authorJob;
             return this;
         }
 
-        public Builder setAuthorAvatar(String authorAvatar) {
+        public Builder setAuthorAvatar(@Nullable String authorAvatar) {
             this.authorAvatar = authorAvatar;
             return this;
         }
 
-        public Builder setContent(final String content){
+        public Builder setContent(@NotNull final String content){
             this.content = content;
             return this;
         }
 
-        public Builder setPublished(String published) {
+        public Builder setPublished(@NotNull String published) {
             this.published = published;
             return this;
         }
 
-        public Builder setLink(String link) {
+        public Builder setLink(@Nullable String link) {
             this.link = link;
             return this;
         }
 
-        public Builder setMentionedMe(boolean mentionedMe) {
+        public Builder setMentionedMe(@NotNull boolean mentionedMe) {
             this.mentionedMe = mentionedMe;
             return this;
         }
 
-        public Builder setLikedByMe(boolean likedByMe) {
+        public Builder setLikedByMe(@NotNull boolean likedByMe) {
             this.likedByMe = likedByMe;
             return this;
         }
 
-        public Builder setCoords(Coordinates coords) {
+        public Builder setCoords(@Nullable Coordinates coords) {
             this.coords = coords;
             return this;
         }
 
-        public Builder setAttachment(Attachment attachment) {
+        public Builder setAttachment(@Nullable Attachment attachment) {
             this.attachment = attachment;
+            return this;
+        }
+
+        public Builder setLikeOwnerIds(@NotNull List<Long> likeOwnerIds) {
+            this.likeOwnerIds = likeOwnerIds;
+            return this;
+        }
+
+        public Builder setUsers(@NotNull Map<Long, UserPreview> users) {
+            this.users = users;
+            return this;
+        }
+
+        public Builder setMentionIds(@NotNull List<Long> mentionIds) {
+            this.mentionIds = mentionIds;
             return this;
         }
 
@@ -109,7 +149,7 @@ public record Post(long id, long authorId, String author, @Nullable String autho
         // В финале вызываем build, чтобы получить результат
         public Post build() {
             return new Post(id, authorId, author, authorJob, authorAvatar, content, published, link, mentionedMe,
-                    likedByMe, coords, attachment, original);
+                    likedByMe, coords, attachment, likeOwnerIds, users, mentionIds, original);
         }
     }
 }
